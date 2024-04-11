@@ -1,0 +1,18 @@
+name: {{projectName}}
+recipe: {{projectRecipe}}
+
+keys: false
+env_file:
+    - ./.env
+
+proxy:
+    mail:
+        - "{{projectName}}.mail.lndo.site"
+
+services:
+    appserver:
+        overrides:
+            environment:
+                DRUSH_OPTIONS_URI: "https://{{projectName}}.lndo.site"
+                # Uncomment this if you want to use XDebug via CLI.
+                # XDEBUG_SESSION_START: LANDO
