@@ -1,8 +1,8 @@
 {
-    "name": "robo-package/aten",
+    "name": "aten/robo-package-plugin",
     "type": "library",
     "license": "MIT",
-    "description": "The Aten Robo package project commands.",
+    "description": "Define the custom Aten CLI commands.",
     "prefer-stable" : true,
     "minimum-stability": "stable",
     "config": {
@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "robo-package/core": "^1.1"
     },
     "require-dev":  {
