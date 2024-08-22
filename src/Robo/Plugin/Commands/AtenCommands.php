@@ -58,8 +58,19 @@ class AtenCommands extends Tasks implements ConfigAwareInterface
      * @param string $action
      *   The action you want to invoke for the project is available options
      *   are (init, update).
+     * @param array $opts
+     *   An array of command options.
+     *
+     * @option $only-framework
+     *  Will only run the framework setup process.
+     * @option $only-environment
+     *   Will only run the environment setup process.
      */
-    public function atenProject(ConsoleIO $io, string $action = 'init'): void
+    public function atenProject(
+        ConsoleIO $io,
+        string $action = 'init',
+        array $opts = ['only-framework' => false, 'only-environment' => false]
+    ): void
     {
         try {
             switch ($action) {
@@ -68,10 +79,22 @@ class AtenCommands extends Tasks implements ConfigAwareInterface
                         'This wizard will guide you through setting up an ' .
                         'Aten-based project.'
                     );
-                    $this
-                        ->setupEnvironment($io)
-                        ->setupFramework($io)
-                        ->launchApplication($io);
+
+                    if (!$opts['only-framework'] && !$opts['only-environment']) {
+                        $this
+                            ->setupEnvironment($io)
+                            ->setupFramework($io);
+                    }
+
+                    if ($opts['only-framework']) {
+                        $this->setupFramework($io);
+                    }
+
+                    if ($opts['only-environment']) {
+                        $this->setupEnvironment($io);
+                    }
+
+                    $this->launchApplication($io);
                     break;
                 case 'update':
                     // Placeholder to run project updates

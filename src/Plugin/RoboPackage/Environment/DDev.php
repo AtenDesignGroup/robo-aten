@@ -35,10 +35,19 @@ class DDev extends EnvironmentPluginBase
                 question: 'Project Name',
                 validator: QuestionValidators::requiredValue()
             )) {
+                $projectMachineName = StringUtil::machineName($projectName);
+
                 $ddevExecutable->setOption(
                     'project-name',
-                    StringUtil::machineName($projectName)
+                    $projectMachineName
                 );
+
+                $ddevExecutable->setOption('web-environment-add', implode(',',
+                    [
+                        'APP_ENVIRONMENT=local',
+                        "DRUSH_OPTIONS_URI=https://$projectMachineName.ddev.site"
+                    ]
+                ));
             }
 
             if ($projectDocroot = $io->ask(
